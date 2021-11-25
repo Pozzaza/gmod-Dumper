@@ -4,14 +4,12 @@
 #include "netvar_manager.h"
 #include "application_interface.h"
 
-struct varialbles
+struct variables //Here you can change modules.
 {
     IBaseClientDLL* BaseClientDLL = (IBaseClientDLL*)CreateInterface("client.dll", "VClient017");
     DWORD client = (DWORD)GetModuleHandle("client.dll");
-    DWORD server = (DWORD)GetModuleHandle("server.dll");
     ClientClass* ClientClasses = (ClientClass*)BaseClientDLL->GetAllClasses();
     DWORD entity = client + 0x6ADF2C;
-    DWORD MAX_PLAYERS = server + 0x984BA4;
 }var;
 
 
@@ -20,14 +18,21 @@ DWORD WINAPI MAIN_THREAD(HMODULE hmodule)
 {
     application_interface AppInterface;
 
+    AppInterface.TextArt();
+
+    AppInterface.TextFunctionals();
+
+    AppInterface.SetColor(FOREGROUND_GREEN);
+
     while (!(GetAsyncKeyState(VK_END) & 1))
     {
 
         if (GetAsyncKeyState(VK_F8) & 1) {
-            netvar_manager::GetAll(var.ClientClasses);
+            netvar_manager::GetAll(var.ClientClasses, var.entity);
         }
 
     }
+
     AppInterface.DelConsole();
     FreeLibraryAndExitThread(hmodule, 0);
     return 0;

@@ -1,5 +1,6 @@
 #pragma once
 #include <ios>
+#include <iostream>
 #include <Windows.h>
 class application_interface
 {
@@ -10,13 +11,19 @@ public:
 	{
 		AllocConsole();
 		freopen_s(&file, "CONOUT$", "w", stdout);
-
-		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(handle, FOREGROUND_GREEN);
+		SetConsoleTitle("NetVar Dumper");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
 	}
 
-	void DelConsole();
 	
+	void DelConsole();
+
+	bool SetColor(int TextColor);
+
+	void TextArt(int TextColor = FOREGROUND_GREEN);
+
+	void TextFunctionals(int TextColor = 15);
+
 	
 };
 
